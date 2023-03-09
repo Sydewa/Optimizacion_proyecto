@@ -34,9 +34,9 @@ public class Player : MonoBehaviour
 
         if(Input.GetButtonDown("Fire1"))
         {
-            Quaternion rotation = Quaternion.LookRotation(transform.forward);
-            ObjectPooler.Instance.SpawnFromPool(BulletTag, canon1.localPosition, rotation);
-            ObjectPooler.Instance.SpawnFromPool(BulletTag, canon2.localPosition, rotation);
+            Quaternion rotation = Quaternion.Euler(0f, transform.eulerAngles.y, 0f);
+            ObjectPooler.Instance.SpawnFromPool(BulletTag, canon1.TransformPoint(Vector3.zero), rotation);
+            ObjectPooler.Instance.SpawnFromPool(BulletTag, canon2.TransformPoint(Vector3.zero), rotation);
         }
     }
 }

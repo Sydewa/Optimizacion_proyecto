@@ -6,18 +6,27 @@ public class Bullet : MonoBehaviour
 {
     public float speed;
 
+    string bullet = "Bullet";
+    string enemy = "Enemy";
+
     void Update()
     {
-        transform.position = Vector3.forward * speed * Time.deltaTime;
+        transform.position += transform.forward * speed * Time.deltaTime;
     }
 
     private void OnTriggerEnter(Collider other) 
     {
-        if(other.CompareTag("enemy"))
+        Debug.Log("Trigger enter");
+        ObjectPooler.Instance.ReturnToPool(bullet, this.gameObject);
+        if(other.CompareTag("Enemy"))
         {
-            Destroy(other.gameObject);
+            ObjectPooler.Instance.ReturnToPool(enemy, other.gameObject);
 
         }
-        Destroy(this.gameObject);
+    }
+
+    private void OnBecameInvisible()
+    {
+        ObjectPooler.Instance.ReturnToPool(bullet, this.gameObject);
     }
 }

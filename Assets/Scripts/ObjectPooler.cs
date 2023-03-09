@@ -68,6 +68,7 @@ public class ObjectPooler : MonoBehaviour
             Debug.LogWarning(tag + " doesn't exist.");
             return null;
         }
+
         GameObject objectToSpawn = poolDictionary[tag].Dequeue();
         objectToSpawn.SetActive(true);
         objectToSpawn.transform.position = position;
@@ -76,5 +77,18 @@ public class ObjectPooler : MonoBehaviour
         poolDictionary[tag].Enqueue(objectToSpawn);
 
         return objectToSpawn;
+    }
+
+    public void ReturnToPool(string tag, GameObject objectToReturn)
+    {
+        if (!poolDictionary.ContainsKey(tag))
+        {
+            Debug.LogWarning(tag + " doesn't exist.");
+            return;
+        }
+
+        objectToReturn.SetActive(false);
+        Debug.Log("Returned to pool");
+        poolDictionary[tag].Enqueue(objectToReturn);
     }
 }
